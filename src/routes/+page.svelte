@@ -2,7 +2,7 @@
     import List from "../lib/list/List.svelte";
     //import ListItem from './lib/list/ListItem.svelte';
     import Counter from "../lib/Counter.svelte";
-    import Info from "../lib/Info.svelte";
+    import Info from "../lib/list/Info.svelte";
     import Value from "../lib/Value.svelte";
     import { Card } from "flowbite-svelte";
     import { writable } from "svelte/store";
@@ -31,15 +31,16 @@
           ["Address", true],
         ]}
         items={[
-          { name: "Belvidere", address: "123 Main St", type: "Location" },
+          { name: "Belvidere", address: "123 Main St", type: "Location", backendID: "12", },
           {
             name: "Indiana Transmission",
             address: "123 Indiana Blvd",
             type: "Location",
+            backendID: "123",
           },
-          { name: "Jefferson North", address: "333 Jefferson St", type: "Location" },
-          { name: "Sterling Heights", address: "123 Main St", type: "Location" },
-          { name: "SpartanNash", address: "444 Spartan Wy", type: "Location"}
+          { name: "Jefferson North", address: "333 Jefferson St", type: "Location", backendID: "12345"},
+          { name: "Sterling Heights", address: "123 Main St", type: "Location", backendID: "123456" },
+          { name: "SpartanNash", address: "444 Spartan Wy", type: "Location", backendID: "1234567" },
         ]}
       />
       <List
@@ -93,21 +94,6 @@
   </main>
   
   <style>
-    .logo {
-      height: 6em;
-      padding: 1.5em;
-      will-change: filter;
-    }
-    .logo:hover {
-      filter: drop-shadow(0 0 2em #646cffaa);
-    }
-    .logo.svelte:hover {
-      filter: drop-shadow(0 0 2em #ff3e00aa);
-    }
-    .read-the-docs {
-      color: #888;
-    }
-
     .top {
       display: flex;
       flex-direction: row;

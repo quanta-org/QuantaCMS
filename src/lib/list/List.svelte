@@ -18,7 +18,7 @@
     import ListItem from "./Row.svelte";
     import SortSelector from "./SortSelector.svelte";
     import ColumnConfig from "./ColumnConfig.svelte";
-    import {Selected, Expanded} from "../selected";
+    import {Selected, SelectedID, SelectedExpanded} from "../selected";
     import type { Item, ItemType } from "../selected"
 
     export let name = "Clients";
@@ -182,7 +182,7 @@
         {/each}
     </Accordion> -->
     <h1>{name}</h1>
-    <Table hoverable={true} class="p-2 overflow-y-auto">
+    <Table hoverable={true} class="p-2 overflow-y-auto" divClass="">
         <TableSearch
             placeholder="Search here!"
             hoverable={true}
@@ -222,21 +222,7 @@
                             {/if}
                         {/each}
                         <TableBodyCell class="!p-4">
-                            <Checkbox bind:group={$Selected} value={item} on:change={(e) => {
-                                Selected.update((selected) => {
-                                    if (selected.includes(item)) {
-                                        return selected.filter((i) => i !== item);
-                                        $Expanded = Array(selected.length - 1).fill(false);
-                                        
-                                    } else {
-                                        $Expanded = [...$Expanded, true];
-                                        return [...selected, item].sort((a, b) => {
-                                            if (a.type < b.type) return -1;
-                                            else return 1;
-                                        });
-                                    }
-                                });
-                            }} />
+                            <Checkbox bind:group={$SelectedID} value={item.backendID} />
                         </TableBodyCell>
                     </TableBodyRow>
                 {/each}

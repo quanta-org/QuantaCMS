@@ -1,14 +1,14 @@
 <script>
     import { Card, Accordion, AccordionItem } from "flowbite-svelte";
     import InfoView from "./InfoView.svelte";
-    import {Selected, Expanded} from "./selected";
+    import {Selected, SelectedExpanded} from "./selected";
 
 </script>
 
 <Card size="xl" class="m-2">
     <Accordion multiple class="">
         {#each $Selected as item, i}
-            <AccordionItem bind:open={$Expanded[i]}>
+            <AccordionItem bind:open={$SelectedExpanded[i]}>
                 <div slot="header">{item.name}</div>
                 <div class="inline-block">
                     <InfoView />
