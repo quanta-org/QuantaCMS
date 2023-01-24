@@ -13,6 +13,9 @@ or
 ### Docker
 ```bash
 docker compose up --build
+
+# To prototype the schema
+docker exec -it cms_svelte npx prisma db push
 ```
 
 ### Node.js
@@ -21,7 +24,10 @@ Change the DATABASE_URL in .env to match your postgres install, then:
 ```bash
 npm install
 npx prisma generate
+
+# To prototype the schema
 npx prisma db push
+
 npm run dev
 ```
 
