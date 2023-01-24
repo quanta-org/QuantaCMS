@@ -1,0 +1,18 @@
+# Pull node base image
+FROM node:19-slim
+
+# Install node dependencies
+WORKDIR /app
+COPY ./package.json .
+RUN npm install
+
+# Move to container
+COPY . .
+
+# Build for production
+RUN npm run build
+WORKDIR /app/build
+
+# Launch app
+CMD ["node", "index.js"]
+EXPOSE 5173

@@ -1,0 +1,30 @@
+version: '3.9'
+
+volumes:
+  postgres_data:
+
+services:
+  cms_svelte:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: cms_svelte
+    ports:
+      - '5173:5173'
+    volumes:
+      - .:/svelte
+      - /app/node_modules
+    environment:
+      DBUSER: ${DBUSER}
+      DBPASS: ${DBPASS}
+      JWTSECRETKEY: ${JWTSECRETKEY}
+  cms_postgres:
+    container_name: cms_postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${DBUSER}
+      POSTGRES_PASSWORD: ${DBPASS}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    image: postgres

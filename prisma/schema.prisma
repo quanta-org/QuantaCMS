@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SalesRep {
+  uid String @id @default(cuid())
+  name String
+  comments String
+  clients Client[]
+}
+
+model Client {
+  uid String @id @default(cuid())
+  name String
+  salesRep SalesRep @relation(fields: [salesRepId], references: [uid])
+  salesRepId String
+  locations Location[]
+  contracts Contract[]
+}
+
+model Location {
+  uid String @id @default(cuid())
+  address String
+  client Client @relation(fields: [clientId], references: [uid])
+  clientId String
+  devices Device[]
+}
+
+model Device {
+  uid String @id @default(cuid())
+  location Location @relation(fields: [locationId], references: [uid])
+  locationId String
+  serialNum Int
+  partNum String
+  invoice Int
+  installed DateTime
+  deviceEvents DeviceEvent[]
+  repairEvents RepairEvent[]
+  serviceCalls ServiceCall[]
+}
+
+model DeviceEvent {
+  uid String @id @default(cuid())
+  device Device @relation(fields: [deviceId], references: [uid])
+  deviceId String
+  date DateTime
+  comments String
+}
+
+model Contract {
+  uid String @id @default(cuid())
+  client Client @relation(fields: [clientId], references: [uid])
+  clientId String
+  start DateTime
+  end DateTime
+  type String
+  comments String
+  contractEvents ContractEvent[]
+}
+
+model ContractEvent {
+  uid String @id @default(cuid())
+  contract Contract @relation(fields: [contractId], references: [uid])
+  contractId String
+  date DateTime
+  comments String
+}
+
+model ServiceRep {
+  uid String @id @default(cuid())
+  name String
+  email String
+  comments String
+  serviceCalls ServiceCall[]
+}
+
+model ServiceCall {
+  uid String @id @default(cuid())
+  serviceRep ServiceRep @relation(fields: [serviceRepId], references: [uid])
+  serviceRepId String
+  devices Device[]
+  date DateTime
+  comments String
+  minutesThere Int
+  minutesDrive Int
+  cost String
+  repairEvents RepairEvent[]
+}
+
+model RepairEvent {
+  uid String @id @default(cuid())
+  device Device @relation(fields: [deviceId], references: [uid])
+  deviceId String
+  serviceCall ServiceCall @relation(fields: [serviceCallId], references: [uid])
+  serviceCallId String
+  date DateTime
+  cost String
+  type String
+  comments String
+}
