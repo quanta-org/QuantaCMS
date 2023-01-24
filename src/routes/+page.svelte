@@ -18,8 +18,7 @@
         <List items={[{ name: "Chrysler", type: "Client" }, {name: "SpartanNash", type: "Client"}]} />
         <List name="Contracts" columns={[
           ["Name", true],
-          ["Total P/L", false],
-          ["P/L per device", false],
+
           ["Months left", false]
         ]}/>
       </div>
