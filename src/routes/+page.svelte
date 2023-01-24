@@ -1,13 +1,11 @@
 <script lang="ts">
     import List from "../lib/list/List.svelte";
     //import ListItem from './lib/list/ListItem.svelte';
-    import Counter from "../lib/Counter.svelte";
     import Info from "../lib/list/Info.svelte";
-    import Value from "../lib/Value.svelte";
     import { Card } from "flowbite-svelte";
     import { writable } from "svelte/store";
     import  {Selected} from "../lib/selected";
-    import type { ItemType, Item } from "../lib/selected"
+    import type { Item } from "../lib/selected"
   
   </script>
   

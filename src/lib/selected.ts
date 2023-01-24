@@ -1,42 +1,41 @@
 import { writable, type Writable } from "svelte/store";
 
 
-//the old item interface
-interface Item {
-    [key: string]: string;
-    backendID: string;
-    type: ItemType;
-}
+// //the old item interface
+// interface Item {
+//     [key: string]: string;
+//     backendID: string;
+//     type: ItemType;
+// }
 
 type ItemType = "Client" | "Location" | "Device" | "Call" | "Contract";
 
 //newer, cooler item interface
-interface ItemItem{
-    ID: string;
+interface Item{
+    [key:string]: string, //for now its just strings 
+    // ID?: string;
 }
 
-
-
-interface Client extends ItemItem{
+interface Client extends Item{
     name: string;
 }
 
-interface Location extends ItemItem{
+interface Location extends Item{
     name: string;
     address: string;
 }
 
-interface Device extends ItemItem{
+interface Device extends Item{
     serial: string;
     model: string;
 }
 
-interface Call extends ItemItem{
+interface Call extends Item{
     date: string;
     timeSpent: string;
 }
 
-interface Contract extends ItemItem{
+interface Contract extends Item{
     name: string;
     end: string;
 }
@@ -52,4 +51,4 @@ const SelectedID:Writable<string[]> = writable([]);
 
 
 export  { Selected, SelectedExpanded, SelectedID};
-export type { Item, ItemType };
+export type {Item, Client, Location, Device, Call, Contract };
