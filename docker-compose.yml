@@ -4,6 +4,16 @@ volumes:
   postgres_data:
 
 services:
+  cms_postgres:
+    container_name: cms_postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${DBUSER}
+      POSTGRES_PASSWORD: ${DBPASS}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    image: postgres
   cms_svelte:
     build:
       context: .
@@ -18,13 +28,5 @@ services:
       DBUSER: ${DBUSER}
       DBPASS: ${DBPASS}
       JWTSECRETKEY: ${JWTSECRETKEY}
-  cms_postgres:
-    container_name: cms_postgres
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_USER: ${DBUSER}
-      POSTGRES_PASSWORD: ${DBPASS}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    image: postgres
+    depends_on:
+      - cms_postgres
