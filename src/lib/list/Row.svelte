@@ -1,9 +1,10 @@
-<script>
+<script lang=ts>
     import {TableBodyRow, TableBodyCell, Checkbox } from "flowbite-svelte";
-import {Selected, SelectedID, SelectedExpanded} from "../selected";
+    import {Selected, SelectedID, SelectedExpanded} from "../selected";
+    import type { Item } from "../selected"
 
 
-    export let item = {};
+    export let item:Item = {};
     export let columns = [];
 </script>
 
