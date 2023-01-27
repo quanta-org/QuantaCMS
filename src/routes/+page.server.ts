@@ -99,7 +99,7 @@ function getAssociations(selected: string[]) {
     //for each selected contract
 
     //for each selected client
-}
+
 
 export const load = () => {
     return result;
