@@ -6,9 +6,16 @@
     import { writable } from "svelte/store";
     import  {Selected} from "../lib/selected";
     import type { Item } from "../lib/selected"
+    import type { Client, Location, Device, ServiceCall, Contract } from '@prisma/client';
 
 
-    export let data;
+    export let data: {
+		  cilents: Client[];
+		  locations: Location[];
+		  devices: Device[];
+		  calls: ServiceCall[];
+		  contracts: Contract[];
+	  };
   
   </script>
   
@@ -76,4 +83,3 @@
     }
 
   </style>
-  
