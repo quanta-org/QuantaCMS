@@ -28,6 +28,7 @@ model Client {
 
 model Location {
   uid String @id @default(cuid())
+  name String
   address String
   client Client @relation(fields: [clientId], references: [uid])
   clientId String
@@ -37,7 +38,9 @@ model Location {
 model Device {
   uid String @id @default(cuid())
   location Location @relation(fields: [locationId], references: [uid])
+  contract Contract @relation(fields: [contractId], references: [uid])
   locationId String
+  contractId String
   serialNum Int
   partNum String
   invoice Int
@@ -64,6 +67,7 @@ model Contract {
   type String
   comments String
   contractEvents ContractEvent[]
+  devices Device[]
 }
 
 model ContractEvent {

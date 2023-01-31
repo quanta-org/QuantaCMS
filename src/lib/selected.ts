@@ -13,7 +13,7 @@ type ItemType = "Client" | "Location" | "Device" | "Call" | "Contract";
 //newer, cooler item interface
 interface Item{
     [key:string]: string, //for now its just strings 
-    ID: string;
+    uid: string;
 }
 
 interface Client extends Item{
