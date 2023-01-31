@@ -22,7 +22,7 @@ services:
     ports:
       - '5173:5173'
     volumes:
-      - .:/svelte
+      - .:/app
       - /app/node_modules
     environment:
       DBUSER: ${DBUSER}
