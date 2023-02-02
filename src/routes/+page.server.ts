@@ -120,7 +120,6 @@ export const load = (async (event) => {
     //let item = await prisma.client.findUnique({ where: { uid: event.params.uid } });
     let item = {uid: "1"} as Item;
 
-  ``-``
 
     return {
         clients: await prisma.client.findMany({ take: 50, include: { salesRep: true } }),
