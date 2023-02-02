@@ -23,7 +23,6 @@ model Client {
   salesRep SalesRep @relation(fields: [salesRepId], references: [uid])
   salesRepId String
   locations Location[]
-  contracts Contract[]
 }
 
 model Location {
@@ -37,7 +36,9 @@ model Location {
 model Device {
   uid String @id @default(cuid())
   location Location @relation(fields: [locationId], references: [uid])
+  contract Contract @relation(fields: [contractId], references: [uid])
   locationId String
+  contractId String
   serialNum Int
   partNum String
   invoice Int
@@ -57,13 +58,12 @@ model DeviceEvent {
 
 model Contract {
   uid String @id @default(cuid())
-  client Client @relation(fields: [clientId], references: [uid])
-  clientId String
   start DateTime
   end DateTime
   type String
   comments String
   contractEvents ContractEvent[]
+  devices Device[]
 }
 
 model ContractEvent {
