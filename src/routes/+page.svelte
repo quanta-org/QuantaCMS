@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import List from "../lib/list/List.svelte";
     import Info from "../lib/list/Info.svelte";
     import type { Client, Location, Device, ServiceCall, Contract } from '@prisma/client';
