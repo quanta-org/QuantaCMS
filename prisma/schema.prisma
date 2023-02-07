@@ -12,14 +12,14 @@ datasource db {
 
 model SalesRep {
   uid String @id @default(cuid())
-  name String
+  name String @unique
   comments String
   clients Client[]
 }
 
 model Client {
   uid String @id @default(cuid())
-  name String
+  name String @unique
   salesRep SalesRep @relation(fields: [salesRepId], references: [uid])
   salesRepId String
   locations Location[]
@@ -27,6 +27,7 @@ model Client {
 
 model Location {
   uid String @id @default(cuid())
+  name String @unique
   address String
   client Client @relation(fields: [clientId], references: [uid])
   clientId String
@@ -39,9 +40,8 @@ model Device {
   contract Contract @relation(fields: [contractId], references: [uid])
   locationId String
   contractId String
-  serialNum Int
-  partNum String
-  invoice Int
+  serialNum String @unique
+  modelNum String
   installed DateTime
   deviceEvents DeviceEvent[]
   repairEvents RepairEvent[]
@@ -76,7 +76,7 @@ model ContractEvent {
 
 model ServiceRep {
   uid String @id @default(cuid())
-  name String
+  name String @unique
   email String
   comments String
   serviceCalls ServiceCall[]
