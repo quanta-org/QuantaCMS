@@ -6,6 +6,10 @@ import type { Client, Location, Device, ServiceCall, Contract, SalesRep } from '
 type Item = Client | Location | Device | ServiceCall | Contract | SalesRep;
 
 
+function isValidTypeString(s: string): s is "client" | "location" | "device" | "serviceCall" | "contract" | "salesRep" {
+    return s === "client" || s === "location" || s === "device" || s === "serviceCall" || s === "contract" || s === "salesRep";
+}
+
 function isClient(i: Item): i is Client {
     return (i as Client).salesRepId !== undefined;
 }
@@ -61,7 +65,7 @@ function getAssLocations(i: Item) {
         return []; //not implemented
         // await devices
         // return all calls/contracts from all devices
-        
+
     }
 
     // default case with no selected item
@@ -115,12 +119,52 @@ function getAssContracts(i: Item) {
 
 export const load = (async (event) => {
     console.log(event.url.searchParams.entries());
-    
 
-    //let item = await prisma.client.findUnique({ where: { uid: event.params.uid } });
-    let item = {uid: "1"} as Item;
+    const params = event.url.searchParams;
 
 
+    // type of item to search for
+    const type = params.get("type");
+
+    // uid of item to search for
+    const uid = params.get("uid");
+
+    // get item from database
+    let item: Item | null;
+    if (type && uid && isValidTypeString(type)) {
+        switch (type) {
+            case "client":
+                item = await prisma.client.findUnique({ where: { uid: uid } });
+                break;
+            case "location":
+                item = await prisma.location.findUnique({ where: { uid: uid } });
+                break;
+            case "device":
+                item = await prisma.device.findUnique({ where: { uid: uid } });
+                break;
+            case "serviceCall":
+                item = await prisma.serviceCall.findUnique({ where: { uid: uid } });
+                break;
+            case "contract":
+                item = await prisma.contract.findUnique({ where: { uid: uid } });
+                break;
+            case "salesRep":
+                item = await prisma.salesRep.findUnique({ where: { uid: uid } });
+                break;
+        }
+        if (item) {
+            return {
+                clients: await getAssClients(item),
+                locations: await getAssLocations(item),
+                devices: await getAssDevices(item),
+                calls: await getAssCalls(item),
+                contracts: await getAssContracts(item),
+                salesReps: await prisma.salesRep.findMany({ take: 50 })
+            }
+        }
+    }
+
+    // if no valid selection, return all items
     return {
         clients: await prisma.client.findMany({ take: 50, include: { salesRep: true } }),
         locations: await prisma.location.findMany({ take: 50 }),
@@ -129,4 +173,5 @@ export const load = (async (event) => {
         contracts: await prisma.contract.findMany({ take: 50 }),
         salesReps: await prisma.salesRep.findMany({ take: 50 })
     }
+
 }) satisfies PageServerLoad;
